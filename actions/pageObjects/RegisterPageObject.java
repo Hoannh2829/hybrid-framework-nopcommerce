@@ -19,6 +19,7 @@ public class RegisterPageObject extends BasePage {
 	}
 
 	public void clickToRegisterButton() {
+		waitForElementVisible(driver, RegisterPageUI.REGISTER_BUTTON);
 		clickToElement(driver, RegisterPageUI.REGISTER_BUTTON);
 	}
 

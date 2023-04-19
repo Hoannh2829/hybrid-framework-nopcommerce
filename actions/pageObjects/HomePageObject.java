@@ -32,4 +32,8 @@ public class HomePageObject extends BasePage {
 
 	}
 
+	public void refreshPage() {
+		refreshToPage(driver);
+	}
+
 }

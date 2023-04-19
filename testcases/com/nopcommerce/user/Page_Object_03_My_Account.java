@@ -1,23 +1,23 @@
 package com.nopcommerce.user;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import commons.BasePage;
+import commons.BaseTest;
 import pageObjects.HomePageObject;
 import pageObjects.LoginPageObject;
 import pageObjects.MyAccountPageObject;
 import pageObjects.RegisterPageObject;
 
-public class Page_Object_03_My_Account extends BasePage {
+public class Page_Object_03_My_Account extends BaseTest {
 	private WebDriver driver;
-	private String projectPath = System.getProperty("user.dir");
 	private HomePageObject homePage;
 	private RegisterPageObject registerPage;
 	private LoginPageObject loginPage;
@@ -25,10 +25,10 @@ public class Page_Object_03_My_Account extends BasePage {
 
 	private String emailAdress, emailAlternative, passwordEmail, alternatePassword;
 
+	@Parameters("browser")
 	@BeforeClass
-	public void beforeClass() {
-		System.setProperty("webdriver.gecko.driver", projectPath + "/browserDrivers/geckodriver");
-		driver = new FirefoxDriver();
+	public void beforeClass(String browserName) {
+		driver = getBrowserDriver(browserName);
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		driver.get("https://demo.nopcommerce.com/");
 		driver.manage().window().maximize();
@@ -44,6 +44,11 @@ public class Page_Object_03_My_Account extends BasePage {
 
 	}
 
+	private int generateFakeNumber() {
+		Random rand = new Random();
+		return rand.nextInt(99999);
+	}
+
 	@Test
 	public void TC_01_Update_Info_Customer() {
 		homePage.clickToRegisterLink();
@@ -53,7 +58,6 @@ public class Page_Object_03_My_Account extends BasePage {
 		registerPage.inputToPasswordTextbox(passwordEmail);
 		registerPage.inputToConfirmPasswordTextbox(passwordEmail);
 		registerPage.clickToRegisterButton();
-		sleepInSecond(3);
 		try {
 			homePage.clickToLoginLink();
 			loginPage.inputToEmailTextbox(emailAdress);
@@ -64,7 +68,6 @@ public class Page_Object_03_My_Account extends BasePage {
 		}
 		homePage.clickToMyAccountLink();
 		myAccountPage.checkToCheckboxGenderMale();
-		sleepInSecond(5);
 		myAccountPage.inputToFirstNameTextbox("Automation");
 		myAccountPage.inputToLastNameTextbox("FC");
 		myAccountPage.checkToDrodownDateOfBirth("29");
@@ -90,8 +93,7 @@ public class Page_Object_03_My_Account extends BasePage {
 
 	@Test
 	public void TC_02_Add_Adress() {
-
-		refreshToPage(driver);
+		homePage.refreshPage();
 		homePage.clickToMyAccountLink();
 		myAccountPage.clickToAddressesLink();
 		myAccountPage.clickToAddAddressButton();
@@ -120,7 +122,6 @@ public class Page_Object_03_My_Account extends BasePage {
 		Assert.assertEquals(myAccountPage.getCountryAfterSaveAddress(), "Viet Nam");
 
 		myAccountPage.clickToCloseMessage();
-		clickToElement(driver, "//span[@class='close']");
 	}
 
 	// @Test

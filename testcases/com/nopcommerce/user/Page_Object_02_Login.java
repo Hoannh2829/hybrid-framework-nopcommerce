@@ -3,29 +3,28 @@ package com.nopcommerce.user;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import commons.BasePage;
+import commons.BaseTest;
 import pageObjects.HomePageObject;
 import pageObjects.LoginPageObject;
 import pageObjects.RegisterPageObject;
 
-public class Page_Object_02_Login extends BasePage {
+public class Page_Object_02_Login extends BaseTest {
 	private WebDriver driver;
 	private HomePageObject homePage;
 	private LoginPageObject loginPage;
 	private RegisterPageObject registerPage;
-	private String projectPath = System.getProperty("user.dir");
 	private String validEmail, firstName, invalidEmail, notFoundEmail, lastName, password, invalidPassword;
 
+	@Parameters("browser")
 	@BeforeClass
-	public void beforeClass() {
-		System.setProperty("webdriver.gecko.driver", projectPath + "/browserDrivers/geckodriver");
-		driver = new FirefoxDriver();
+	public void beforeClass(String browserName) {
+		driver = getBrowserDriver(browserName);
 		homePage = new HomePageObject(driver);
 		loginPage = new LoginPageObject(driver);
 		registerPage = new RegisterPageObject(driver);
@@ -34,8 +33,8 @@ public class Page_Object_02_Login extends BasePage {
 		firstName = "Automation";
 		lastName = "FC";
 		invalidEmail = "huuhoan123";
-		notFoundEmail = "cfa" + generateFakeNumber() + "@mail.com";
-		validEmail = "afc" + generateFakeNumber() + "@mail.com";
+		notFoundEmail = "cfa" + loginPage.generateFakeNumber() + "@mail.com";
+		validEmail = "afc" + loginPage.generateFakeNumber() + "@mail.com";
 		password = "123456";
 		invalidPassword = "765432";
 	}

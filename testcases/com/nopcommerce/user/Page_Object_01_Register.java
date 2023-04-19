@@ -3,22 +3,21 @@ package com.nopcommerce.user;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import commons.BasePage;
+import commons.BaseTest;
 import pageObjects.HomePageObject;
 import pageObjects.RegisterPageObject;
 
-public class Page_Object_01_Register extends BasePage {
+public class Page_Object_01_Register extends BaseTest {
+	@Parameters("browser")
 	@BeforeClass
-	public void beforeClass() {
-
-		System.setProperty("webdriver.chrome.driver", projectPath + "/browserDrivers/chromedriver");
-		driver = new ChromeDriver();
+	public void beforeClass(String browserName) {
+		driver = getBrowserDriver(browserName);
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		driver.get("https://demo.nopcommerce.com/");
 		homePage = new HomePageObject(driver);
@@ -26,7 +25,7 @@ public class Page_Object_01_Register extends BasePage {
 
 		firstName = "Automation";
 		lastName = "FC";
-		emailAdress = "afc" + generateFakeNumber() + "@mail.com";
+		emailAdress = "afc" + registerPage.generateFakeNumber() + "@mail.com";
 		password = "123456";
 	}
 
@@ -133,6 +132,5 @@ public class Page_Object_01_Register extends BasePage {
 	private WebDriver driver;
 	private HomePageObject homePage;
 	private RegisterPageObject registerPage;
-	private String projectPath = System.getProperty("user.dir");
 	private String firstName, lastName, password, emailAdress;
 }
