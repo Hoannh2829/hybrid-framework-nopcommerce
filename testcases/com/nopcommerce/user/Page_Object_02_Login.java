@@ -1,7 +1,5 @@
 package com.nopcommerce.user;
 
-import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -10,31 +8,30 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import commons.BaseTest;
-import pageObjects.HomePageObject;
-import pageObjects.LoginPageObject;
-import pageObjects.RegisterPageObject;
+import pageObjects.nopCommerce.portal.UserHomePageObject;
+import pageObjects.nopCommerce.portal.UserLoginPageObject;
+import pageObjects.nopCommerce.portal.UserRegisterPageObject;
 
 public class Page_Object_02_Login extends BaseTest {
 	private WebDriver driver;
-	private HomePageObject homePage;
-	private LoginPageObject loginPage;
-	private RegisterPageObject registerPage;
+	private UserHomePageObject homePage;
+	private UserLoginPageObject loginPage;
+	private UserRegisterPageObject registerPage;
 	private String validEmail, firstName, invalidEmail, notFoundEmail, lastName, password, invalidPassword;
 
 	@Parameters("browser")
 	@BeforeClass
 	public void beforeClass(String browserName) {
 		driver = getBrowserDriver(browserName);
-		homePage = new HomePageObject(driver);
-		loginPage = new LoginPageObject(driver);
-		registerPage = new RegisterPageObject(driver);
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		driver.get("https://demo.nopcommerce.com/");
+		homePage = new UserHomePageObject(driver);
+		loginPage = new UserLoginPageObject(driver);
+		registerPage = new UserRegisterPageObject(driver);
+
 		firstName = "Automation";
 		lastName = "FC";
 		invalidEmail = "huuhoan123";
-		notFoundEmail = "cfa" + loginPage.generateFakeNumber() + "@mail.com";
-		validEmail = "afc" + loginPage.generateFakeNumber() + "@mail.com";
+		notFoundEmail = "cfa" + generateFakeNumner() + "@mail.com";
+		validEmail = "afc" + generateFakeNumner() + "@mail.com";
 		password = "123456";
 		invalidPassword = "765432";
 	}

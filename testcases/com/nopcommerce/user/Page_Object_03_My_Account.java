@@ -1,6 +1,5 @@
 package com.nopcommerce.user;
 
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
@@ -11,17 +10,17 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import commons.BaseTest;
-import pageObjects.HomePageObject;
-import pageObjects.LoginPageObject;
-import pageObjects.MyAccountPageObject;
-import pageObjects.RegisterPageObject;
+import pageObjects.nopCommerce.portal.UserHomePageObject;
+import pageObjects.nopCommerce.portal.UserLoginPageObject;
+import pageObjects.nopCommerce.portal.UserMyAccountPageObject;
+import pageObjects.nopCommerce.portal.UserRegisterPageObject;
 
 public class Page_Object_03_My_Account extends BaseTest {
 	private WebDriver driver;
-	private HomePageObject homePage;
-	private RegisterPageObject registerPage;
-	private LoginPageObject loginPage;
-	private MyAccountPageObject myAccountPage;
+	private UserHomePageObject homePage;
+	private UserRegisterPageObject registerPage;
+	private UserLoginPageObject loginPage;
+	private UserMyAccountPageObject myAccountPage;
 
 	private String emailAdress, emailAlternative, passwordEmail, alternatePassword;
 
@@ -29,24 +28,20 @@ public class Page_Object_03_My_Account extends BaseTest {
 	@BeforeClass
 	public void beforeClass(String browserName) {
 		driver = getBrowserDriver(browserName);
+
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		driver.get("https://demo.nopcommerce.com/");
 		driver.manage().window().maximize();
+		homePage = new UserHomePageObject(driver);
+		registerPage = new UserRegisterPageObject(driver);
+		loginPage = new UserLoginPageObject(driver);
+		myAccountPage = new UserMyAccountPageObject(driver);
 
-		emailAdress = "huuhoantr" + generateFakeNumber() + "@gmail.com";
-		emailAlternative = "automationfc" + generateFakeNumber() + "@gmail.com";
+		emailAdress = "huuhoantr" + myAccountPage.generateFakeNumber() + "@gmail.com";
+		emailAlternative = "automationfc" + myAccountPage.generateFakeNumber() + "@gmail.com";
 		passwordEmail = "123456";
 		alternatePassword = "654321";
-		homePage = new HomePageObject(driver);
-		registerPage = new RegisterPageObject(driver);
-		loginPage = new LoginPageObject(driver);
-		myAccountPage = new MyAccountPageObject(driver);
 
-	}
-
-	private int generateFakeNumber() {
-		Random rand = new Random();
-		return rand.nextInt(99999);
 	}
 
 	@Test
@@ -124,54 +119,35 @@ public class Page_Object_03_My_Account extends BaseTest {
 		myAccountPage.clickToCloseMessage();
 	}
 
-	// @Test
-	// public void TC_03_Change_Password() {
-	// refreshToPage(driver);
-	// waitForElementClickable(driver, "//a[@class='ico-logout']");
-	// clickToElement(driver, "//a[@class='ico-logout']");
-	// waitForElementClickable(driver, "//a[@class='ico-login']");
-	// clickToElement(driver, "//a[@class='ico-login']");
-	//
-	// waitForElementClickable(driver, "//input[@id='Email']");
-	// sendkeyToElement(driver, "//input[@id='Email']", emailAlternative);
-	// sendkeyToElement(driver, "//input[@id='Password']", passwordEmail);
-	// clickToElement(driver, "//button[@class='button-1 login-button']");
-	// sleepInSecond(3);
-	//
-	// waitForElementClickable(driver, "//a[@class='ico-account']");
-	// clickToElement(driver, "//a[@class='ico-account']");
-	// waitForElementClickable(driver, "//a[text()='Change password']");
-	// clickToElement(driver, "//a[text()='Change password']");
-	//
-	// waitForElementClickable(driver, "//input[@id='OldPassword']");
-	// sendkeyToElement(driver, "//input[@id='OldPassword']", passwordEmail);
-	// sendkeyToElement(driver, "//input[@id='NewPassword']", alternatePassword);
-	// sendkeyToElement(driver, "//input[@id='ConfirmNewPassword']", alternatePassword);
-	// clickToElement(driver, "//button[@class='button-1 change-password-button']");
-	// Assert.assertEquals(getElementText(driver, "//div[@class='bar-notification success']"), "Password was changed");
-	//
-	// waitForElementClickable(driver, "//span[@class='close']");
-	// clickToElement(driver, "//span[@class='close']");
-	// sleepInSecond(5);
-	//
-	// waitForElementClickable(driver, "//a[@class='ico-logout']");
-	// clickToElement(driver, "//a[@class='ico-logout']");
-	// waitForElementClickable(driver, "//a[@class='ico-login']");
-	// clickToElement(driver, "//a[@class='ico-login']");
-	//
-	// waitForElementClickable(driver, "//input[@id='Email']");
-	// sendkeyToElement(driver, "//input[@id='Email']", emailAlternative);
-	// sendkeyToElement(driver, "//input[@id='Password']", passwordEmail);
-	// clickToElement(driver, "//button[@class='button-1 login-button']");
-	// Assert.assertEquals(getElementText(driver, "//div[@class='message-error validation-summary-errors']"), "Login was unsuccessful. Please correct the errors and
-	// try again.\nThe credentials provided are incorrect");
-	//
-	// waitForElementClickable(driver, "//input[@id='Email']");
-	// sendkeyToElement(driver, "//input[@id='Email']", emailAlternative);
-	// sendkeyToElement(driver, "//input[@id='Password']", alternatePassword);
-	// clickToElement(driver, "//button[@class='button-1 login-button']");
-	// Assert.assertTrue(isElementDisplay(driver, "//a[@class='ico-account']"));
-	// }
+	@Test
+	public void TC_03_Change_Password() {
+		homePage.refreshPage();
+		loginPage.clickLogoutButton();
+		homePage.clickToLoginLink();
+		loginPage.inputToEmailTextbox(emailAlternative);
+		loginPage.inputToPasswordTextbox(passwordEmail);
+		loginPage.clickToLoginButton();
+		homePage.clickToMyAccountLink();
+		myAccountPage.clickToChangePasswordButton();
+
+		myAccountPage.inputToOldPasswordTextbox(passwordEmail);
+		myAccountPage.inputToNewPasswordTextbox(alternatePassword);
+		myAccountPage.inputToConfirmNewPasswordTextbox(alternatePassword);
+		myAccountPage.clickToChangePasswordLink();
+		myAccountPage.clickToCloseMessage();
+		sleepInSecond(5);
+
+		loginPage.clickLogoutButton();
+		homePage.clickToLoginLink();
+		loginPage.inputToEmailTextbox(emailAlternative);
+		loginPage.inputToPasswordTextbox(passwordEmail);
+		loginPage.clickToLoginButton();
+		Assert.assertEquals(loginPage.getErrorMassageUnsuccessfull(), "Login was unsuccessful. Please correct the errors and " + "try again.\nThe credentials provided are incorrect");
+		loginPage.inputToEmailTextbox(emailAlternative);
+		loginPage.inputToPasswordTextbox(alternatePassword);
+		loginPage.clickToLoginButton();
+		Assert.assertTrue(myAccountPage.isDisplayMyAccountLink());
+	}
 	//
 	// @Test
 	// public void TC_04_Review_Product() {
