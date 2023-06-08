@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -60,7 +61,7 @@ public class BasePage {
 		driver.navigate().forward();
 	}
 
-	protected void refreshToPage(WebDriver driver) {
+	public void refreshToPage(WebDriver driver) {
 		driver.navigate().refresh();
 	}
 
@@ -185,12 +186,12 @@ public class BasePage {
 
 	protected void selectItemInDefaultDropdown(WebDriver driver, String locatorType, String textItem, String... dynamicValues) {
 		Select select = new Select(getWebElement(driver, getDynamicLocator(locatorType, dynamicValues)));
-		select.selectByValue(textItem);
+		select.selectByVisibleText(textItem);
 	}
 
 	protected void selectItemInDefaultDropdown(WebDriver driver, String locatorType, String textItem) {
 		Select select = new Select(getWebElement(driver, locatorType));
-		select.selectByValue(textItem);
+		select.selectByVisibleText(textItem);
 	}
 
 	protected String getSelectedItemDropdown(WebDriver driver, String locatorType) {
@@ -579,6 +580,34 @@ public class BasePage {
 	public String getDirectorySlash(String folderName) {
 		String separator = System.getProperty("file.separator");
 		return separator + folderName + separator;
+	}
+
+	public void setCookie(WebDriver driver, Set<Cookie> cookies) {
+		for (Cookie cookie : cookies) {
+			driver.manage().addCookie(cookie);
+		}
+	}
+
+	public Set<Cookie> getAllCookies(WebDriver driver) {
+		return driver.manage().getCookies();
+	}
+
+	/**
+	 * Enter to textbox by ID
+	 * 
+	 * @param driver
+	 * @param valueID: value of ID in DOM
+	 * @param value:   value input to textbox
+	 */
+	public void inputToTextboxByID(WebDriver driver, String valueID, String value) {
+		waitForElementVisible(driver, BasePageUI.DYNAMIC_TEXTBOX_BY_ID, valueID);
+		sendkeyToElement(driver, BasePageUI.DYNAMIC_TEXTBOX_BY_ID, value, valueID);
+	}
+
+	public UserHomePageObject clickToButtonByText(WebDriver driver, String textButton) {
+		waitForElementClickable(driver, BasePageUI.DYNAMIC_BUTTON_BY_TEXT, textButton);
+		clickToElement(driver, BasePageUI.DYNAMIC_BUTTON_BY_TEXT, textButton);
+		return PageGeneratorManager.getUserHomePage(driver);
 	}
 
 }

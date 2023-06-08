@@ -1,0 +1,6 @@
+#!/bin/sh
+project_path="/Volumes/Code/Code/03 - MAC OS Software/eclipse-workspace/hybrid-framework-nopcommerce"
+cd "$project_path"
+java -javaagent:"$project_path//libAllure/aspectjweaver-1.9.8.jar" -classpath "$project_path/bin:$project_path/libAllure/*:$project_path/Log4J/*:$project_path/libExtentV5/*:$project_path/libReportNG/*:$project_path/libWebDriverManager/*:$project_path/libraries/*" org.testng.TestNG "$project_path/bin/runNopCommerceTest.xml"
+source ~/.bash_profile
+allure serve ./allure-json/

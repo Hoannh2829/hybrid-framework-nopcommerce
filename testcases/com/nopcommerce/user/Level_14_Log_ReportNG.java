@@ -1,7 +1,6 @@
 package com.nopcommerce.user;
 
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
@@ -37,22 +36,34 @@ public class Level_14_Log_ReportNG extends BaseTest {
 	}
 
 	@Test
-	public void TC_01_Register() {
-		log.info("Register - Step 01: Open 'Register' Page");
-
+	public void Register() {
+		log.info("Register - Step 01: Click to Register link");
 		userRegisterPage = userHomePage.clickToRegisterLink();
-		log.info("Register - Step 02: Enter to FirstName, LastName, EmailAddress, Password with value is: '" + userFirstName + "', '" + userLastName + "', '" + userEmailAddress + "' , '" + userPassword + "'");
 
-		userRegisterPage.registerAsAccount(userFirstName, userLastName, userEmailAddress, userPassword);
-		log.info("Register - Step 03: Click Logout link if auto login after register");
+		log.info("Register - Step 02: Input to Email textbox with value:'" + userEmailAddress + "'");
+		userRegisterPage.inputToEmailTextbox(userEmailAddress);
 
-		try {
-			userHomePage = userRegisterPage.clickLogoutLink();
-		} catch (Exception e) {
+		log.info("Register - Step 03: Input to FirstName textbox with value:'" + userFirstName + "'");
+		userRegisterPage.inputToFirstNameTextbox(userFirstName);
+
+		log.info("Register - Step 04: Input to LastName textbox with value:'" + userLastName + "'");
+		userRegisterPage.inputToLastNamextbox(userLastName);
+
+		log.info("Register - Step 05: Input to Password textbox with value:'" + userPassword + "'");
+		userRegisterPage.inputToPasswordTextbox(userPassword);
+
+		log.info("Register - Step 06: Input to ConfirmPassword textbox with value:'" + userPassword + "'");
+		userRegisterPage.inputToConfirmPasswordTextbox(userPassword);
+
+		log.info("Register - Step 07: Click to Register button");
+		userRegisterPage.clickToRegisterButton();
+
+		log.info("Register - Step 08: Click logout link if login auto after registed");
+		if (userRegisterPage.isMyAccountLinkIsUnDiplayed()) {
 			userRegisterPage = userHomePage.clickToRegisterLink();
+		} else {
+			userHomePage = userRegisterPage.clickLogoutLink();
 		}
-		System.out.println(System.getProperty("user.dir"));
-
 	}
 
 	@Test
@@ -64,7 +75,7 @@ public class Level_14_Log_ReportNG extends BaseTest {
 		userLoginPage.loginAsUser(userEmailAddress, userPassword);
 
 		log.info("Login - Step 03: Verify My Account Link display");
-		Assert.assertFalse(userHomePage.isMyAccountLinkDisplayed());
+		verifyTrue(userHomePage.isMyAccountLinkDisplayed());
 
 		log.info("Login - Step 04: Clock to My Account Link");
 		userCustomerInfoPage = userHomePage.clickToMyAccountLink();
@@ -73,7 +84,7 @@ public class Level_14_Log_ReportNG extends BaseTest {
 		userHomePage = userCustomerInfoPage.clickToLogoutLinkAtUserPage(driver);
 
 		log.info("Login - Step 03: Verify My Account Link undisplay");
-		Assert.assertTrue(userHomePage.isMyAccountLinkDisplayed());
+		verifyFalse(userHomePage.isMyAccountLinkDisplayed());
 
 	}
 

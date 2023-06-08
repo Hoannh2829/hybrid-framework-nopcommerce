@@ -41,6 +41,11 @@ public class UserHomePageObject extends BasePage {
 		return isElementDisplay(driver, UserHomePageUI.MY_ACCOUNT_LINK);
 	}
 
+	@Step("Verify My Account Link is undisplayed")
+	public boolean isMyAccountLinkUndisplayed() {
+		return isElementUndisplayed(driver, UserHomePageUI.MY_ACCOUNT_LINK);
+	}
+
 	@Step("Reload Page")
 	public void refreshPage() {
 		refreshToPage(driver);

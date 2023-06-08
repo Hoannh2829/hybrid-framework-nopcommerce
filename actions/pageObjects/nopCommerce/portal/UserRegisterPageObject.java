@@ -103,7 +103,12 @@ public class UserRegisterPageObject extends BasePage {
 	}
 
 	public boolean isMyAccountLinkIsUnDiplayed() {
-		isElementUndisplayed(driver, UserRegisterPageUI.MY_ACCOUT_LINK);
-		return true;
+		return isElementUndisplayed(driver, UserRegisterPageUI.MY_ACCOUT_LINK);
 	}
+
+	@Step("Check display My Acount link display")
+	public boolean isMyAccountLinkIsDisplayed() {
+		return isElementDisplay(driver, UserRegisterPageUI.MY_ACCOUT_LINK);
+	}
+
 }

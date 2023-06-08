@@ -63,6 +63,10 @@
 	<classpathentry kind="lib" path="libAllure/okhttp-3.11.0.jar"/>
 	<classpathentry kind="lib" path="libAllure/okio-1.14.1.jar"/>
 	<classpathentry kind="lib" path="libAllure/tika-core-1.20.jar"/>
+	<classpathentry kind="lib" path="libFaker/generex-1.0.2.jar"/>
+	<classpathentry kind="lib" path="libFaker/javafaker-1.0.1.jar"/>
+	<classpathentry kind="lib" path="libFaker/snakeyaml-1.23.jar"/>
 	<classpathentry kind="con" path="org.testng.TESTNG_CONTAINER"/>
+	<classpathentry kind="lib" path="/9Shop/libAllure/aspectjtools-1.9.8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

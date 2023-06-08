@@ -1,0 +1,19 @@
+[INFO ] [2023-06-04 15:15:13,954] Register - Step 01: Click to Register link
+[INFO ] [2023-06-04 15:15:16,719] Register - Step 02: Input to Email textbox with value:'automationfc28513@gmail.com'
+[INFO ] [2023-06-04 15:15:17,627] Register - Step 03: Input to FirstName textbox with value:'Automation'
+[INFO ] [2023-06-04 15:15:18,419] Register - Step 04: Input to LastName textbox with value:'FC'
+[INFO ] [2023-06-04 15:15:18,675] Register - Step 05: Input to Password textbox with value:'1233456'
+[INFO ] [2023-06-04 15:15:18,966] Register - Step 06: Input to ConfirmPassword textbox with value:'1233456'
+[INFO ] [2023-06-04 15:15:19,234] Register - Step 07: Click to Register button
+[INFO ] [2023-06-04 15:15:20,908] Register - Step 08: Click logout link if login auto after registed
+[INFO ] [2023-06-04 15:15:27,764] Login - Step 01: Open login Page
+[INFO ] [2023-06-04 15:15:28,388] Login - Step 02: Login with info registered
+[INFO ] [2023-06-04 15:15:29,006] Login - Step 03: Click to login button
+[INFO ] [2023-06-04 15:15:31,508] Login - Step 04: Verify My Account Link display
+[INFO ] [2023-06-04 15:15:31,577]  -------------------------- PASSED -------------------------- 
+[INFO ] [2023-06-04 15:15:31,580] Login - Step 05: Clock to My Account Link
+[INFO ] [2023-06-04 15:15:32,169] Login - Step 06: Click to Logout Link
+[INFO ] [2023-06-04 15:15:32,968] Login - Step 07: Verify My Account Link undisplay
+[INFO ] [2023-06-04 15:15:38,351]  -------------------------- PASSED -------------------------- 
+[INFO ] [2023-06-04 15:15:38,364] OS name = Mac OS X
+[INFO ] [2023-06-04 15:15:38,364] Driver instance name = chromedriver: chrome on mac (f2ae4e4bd045daf76cefcc7a82f49fe4)
